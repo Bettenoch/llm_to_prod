@@ -1,7 +1,8 @@
+import torch
 from transformers import AutoModelForCausalLm, AutoTokenizer
 
 
-OPT = AutoModelForCausalLm.from_pretrained("facebook/opt-1.3b", load_in_8bit=True)
+OPT = AutoModelForCausalLm.from_pretrained("facebook/opt-1.3b", load_in_8bit=True, device_map="auto")
 tokenizer = AutoTokenizer.from_pretrained("facebook/opt-1.3b")
 
 inp = "The quick brown fox jumps over the lazy dog"
@@ -9,3 +10,5 @@ inp = "The quick brown fox jumps over the lazy dog"
 inp_tokenized = tokenizer(inp, return_tensors="pt")
 print(inp_tokenized["input_ids"].size())
 print(inp_tokenized)
+
+print(OPT.model)#checks the model info
